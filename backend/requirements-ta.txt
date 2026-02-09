@@ -1,0 +1,3 @@
+# Technical Analysis dependencies
+# These are separate from Phase 1 requirements to avoid merge conflicts
+scipy>=1.10.0
