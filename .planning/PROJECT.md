@@ -6,7 +6,7 @@ FinSpeak Trader is a financial analysis platform that decodes corporate communic
 
 ## Core Value
 
-**Translate complex corporate communications into actionable trading intelligence with a quantified confidence level** — if the translation + RQI score + entry recommendations work together on one ticker, the MVP succeeds.
+**Build a multi-signal financial analysis engine that combines technical analysis convergence with NLP sentiment scoring into a dynamic, confidence-weighted Risk Quantification Index (RQI) and actionable entry recommendations** — the analytical engine is the product, the UI is the display layer.
 
 ## Requirements
 
