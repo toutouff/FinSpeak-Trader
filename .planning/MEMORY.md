@@ -1,8 +1,28 @@
 # FinSpeak Trader - Claude Session Memory
 
 > **Purpose**: This file preserves critical learnings and decisions across machines/sessions.
-> When starting a new Claude Code session on another machine, reference this file to restore context.
-> Copy this to your local Claude memory: `~/.claude/projects/<project-key>/memory/MEMORY.md`
+> On a new machine, `setup.sh` auto-copies this to Claude memory. Or manually:
+> `cp .planning/MEMORY.md ~/.claude/projects/<project-key>/memory/MEMORY.md`
+
+## Current Status (2026-02-09)
+- **Branch**: `phase1&2` (pushed to GitHub)
+- **Progress**: Phases 1 & 2 COMPLETE (50%), Phase 3 next
+- **Tests**: 69/69 passing
+- **Setup**: `./setup.sh` for fresh Mac dev env
+
+## What's Built
+### Phase 1 - Foundation & Data Pipeline (DONE)
+- FastAPI app with CORS, lifespan (Ollama pre-warm, InfluxDB health)
+- `GET /api/market-data/{ticker}` - InfluxDB cached OHLCV
+- `GET /api/corporate-data/{ticker}` - FMP API (earnings, news, press)
+- `POST /api/sentiment/analyze` - Ollama LLM with source-quality weighting
+- Config via pydantic-settings, all async with httpx
+
+### Phase 2 - Technical Analysis Engine (DONE)
+- 6 TA methods in `services/ta/`: VP, S/R, RSI, MACD, Bollinger, Ichimoku
+- Convergence scorer (4+ agree = boost, 1-2 agree = penalty)
+- `GET /api/technical/{ticker}` - complete TA bundle
+- Pure numpy/pandas/scipy (no external TA libs)
 
 ## Project Identity
 - **Type**: Hackathon MVP, 1-week timeline
@@ -12,55 +32,32 @@
 ## Key Decisions
 - **Backend**: FastAPI (Python) - reuses existing data pipeline
 - **Frontend**: React + Vite + Tailwind CSS 4 + Lightweight Charts
-- **LLM**: Ollama local (Llama 3.1 8B Instruct recommended) - zero API cost
-- **DB**: InfluxDB (existing, OHLCV data for AAPL/MSFT/GOOGL/NVDA)
+- **LLM**: Ollama local (Llama 3.1 8B) - zero API cost
+- **DB**: InfluxDB (existing, OHLCV for AAPL/MSFT/GOOGL/NVDA)
 - **Corporate data**: Financial Modeling Prep free tier (250 req/day)
-- **State mgmt**: Zustand + TanStack Query (not Redux)
-- **NO**: LangChain, Axios, MUI, pandas-ta (removed from GitHub)
+- **NO**: LangChain, Axios, MUI, pandas-ta
 
-## Architecture Priority
-1. Analytical engine FIRST (phases 1-3), UI LAST (phase 4)
-2. Plain English Translation = v1.5 (not v1!) - user considers it polish
-3. Candlestick chart = v1.5 - user wants analysis data, not chart overlays
-4. 5 TA methods in v1: Volume Profile, S/R, RSI+MACD, Bollinger, Ichimoku
-5. RQI = dynamic weighting based on confidence of each signal source
+## Architecture
+- `backend/app/main.py` → routers → services → models
+- TA modules: `services/ta/{vp,sr,rsi,macd,bollinger,ichimoku,convergence}.py`
+- Tests: `backend/tests/` (69 tests covering models, services, API, all TA)
+- Config: `backend/app/config.py` (all keys optional with defaults)
 
-## Critical Pitfalls (from research)
+## Roadmap
+```
+Phase 1 (DONE) ──────┐
+                      ├──→ Phase 3 (RQI + Position) ──→ Phase 4 (Dashboard)
+Phase 2 (DONE) ──────┘
+```
+
+## Critical Pitfalls
 - LLM hallucination: never let LLM extract numbers, use structured data
 - VP from daily data: label as "estimated", supplement with conventional S/R
-- Alpha Vantage: 25 req/day free tier - cache EVERYTHING
-- Ollama: use httpx async (not requests), pre-warm model, streaming responses
-- Scope creep: daily checkpoints, timebox features to 1 day
+- Ollama: httpx async only, pre-warm model on startup
+- Scope creep: timebox features to 1 day
 
-## Roadmap (4 phases)
-```
-Phase 1 (Foundation + Data Pipeline) ──────┐
-                                            ├──→ Phase 3 (RQI + Position) ──→ Phase 4 (Dashboard + E2E)
-Phase 2 (Technical Analysis Engine) ───────┘
-```
-
-- Phase 1: FastAPI + market data API + corporate data fetch + LLM sentiment (5 reqs)
-- Phase 2: 6 TA methods + convergence scoring (7 reqs) — PARALLEL with Phase 1
-- Phase 3: RQI dynamic scoring + DCA entries + narrative (7 reqs) — after 1+2
-- Phase 4: React dashboard + orchestration + full AAPL demo (7 reqs) — last
-
-## Files Structure
-- `.planning/PROJECT.md` - project context & core value
-- `.planning/REQUIREMENTS.md` - 26 v1 requirements with REQ-IDs
-- `.planning/ROADMAP.md` - 4 phases (1+2 parallel → 3 → 4)
-- `.planning/STATE.md` - current progress tracker
-- `.planning/research/` - STACK, FEATURES, ARCHITECTURE, PITFALLS, SUMMARY
-- `.planning/config.json` - YOLO mode, quick depth, parallel, quality models
-
-## GSD Workflow Config
-- Mode: YOLO (auto-approve)
-- Depth: Quick (3-5 phases)
-- Parallel: Yes
-- Research + Plan Check + Verifier: All enabled
-- Models: Opus for research/planning, Sonnet for coding, Haiku for simple tasks
-
-## How to Resume on Another Machine
-1. `git pull` to get latest
-2. Copy `.planning/MEMORY.md` content to `~/.claude/projects/<project-key>/memory/MEMORY.md`
-3. Run `/gsd:progress` to see current state
-4. Run `/gsd:plan-phase N` for the next unplanned phase
+## How to Resume
+1. `git clone` + `git checkout phase1&2` + `./setup.sh`
+2. Fill `.env` with API keys
+3. `claude` then `/gsd:progress` to see state
+4. Phase 3 is next: RQI scoring + DCA position strategy
