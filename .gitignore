@@ -1,1 +1,30 @@
+# Dependencies
 /node_modules
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+nul
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build
+dist/
+build/
+*.pyc
+__pycache__/
+
+# Claude Code local settings (machine-specific)
+.claude/
