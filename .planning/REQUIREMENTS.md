@@ -103,38 +103,38 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| DATA-01 | — | Pending |
-| DATA-02 | — | Pending |
-| DATA-03 | — | Pending |
-| SENT-01 | — | Pending |
-| SENT-02 | — | Pending |
-| SENT-03 | — | Pending |
-| TECH-01 | — | Pending |
-| TECH-02 | — | Pending |
-| TECH-03 | — | Pending |
-| TECH-04 | — | Pending |
-| TECH-05 | — | Pending |
-| TECH-06 | — | Pending |
-| TECH-07 | — | Pending |
-| POS-01 | — | Pending |
-| POS-02 | — | Pending |
-| RQI-01 | — | Pending |
-| RQI-02 | — | Pending |
-| RQI-03 | — | Pending |
-| RQI-04 | — | Pending |
-| UI-01 | — | Pending |
-| UI-02 | — | Pending |
-| UI-03 | — | Pending |
-| UI-04 | — | Pending |
-| UI-05 | — | Pending |
-| INT-01 | — | Pending |
-| INT-02 | — | Pending |
+| DATA-01 | Phase 1 | Pending |
+| DATA-02 | Phase 1 | Pending |
+| DATA-03 | Phase 1 | Pending |
+| SENT-01 | Phase 1 | Pending |
+| SENT-02 | Phase 1 | Pending |
+| SENT-03 | Phase 3 | Pending |
+| TECH-01 | Phase 2 | Pending |
+| TECH-02 | Phase 2 | Pending |
+| TECH-03 | Phase 2 | Pending |
+| TECH-04 | Phase 2 | Pending |
+| TECH-05 | Phase 2 | Pending |
+| TECH-06 | Phase 2 | Pending |
+| TECH-07 | Phase 2 | Pending |
+| POS-01 | Phase 3 | Pending |
+| POS-02 | Phase 3 | Pending |
+| RQI-01 | Phase 3 | Pending |
+| RQI-02 | Phase 3 | Pending |
+| RQI-03 | Phase 3 | Pending |
+| RQI-04 | Phase 3 | Pending |
+| UI-01 | Phase 4 | Pending |
+| UI-02 | Phase 4 | Pending |
+| UI-03 | Phase 4 | Pending |
+| UI-04 | Phase 4 | Pending |
+| UI-05 | Phase 4 | Pending |
+| INT-01 | Phase 4 | Pending |
+| INT-02 | Phase 4 | Pending |
 
 **Coverage:**
 - v1 requirements: 26 total
-- Mapped to phases: 0
-- Unmapped: 26
+- Mapped to phases: 26
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-02-09*
-*Last updated: 2026-02-09 after initial definition*
+*Last updated: 2026-02-09 after roadmap creation (traceability mapped)*
